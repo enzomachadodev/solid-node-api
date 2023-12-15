@@ -1,6 +1,9 @@
-import { Express } from "express";
+import { Express, Router } from "express";
 import { register } from "./controllers/register";
 
-export const appRoutes = async (app: Express) => {
-  app.post("/users", register);
+export const setupRoutes = (app: Express) => {
+  const router = Router();
+  router.post("/users", register);
+
+  app.use("/api", router);
 };

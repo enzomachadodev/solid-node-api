@@ -9,6 +9,8 @@ export const register = async (req: Request, res: Response) => {
     password: z.string(),
   });
 
+  console.log(req.body);
+
   const payload = registerBodySchema.parse(req.body);
 
   try {

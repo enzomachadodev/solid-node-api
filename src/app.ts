@@ -1,6 +1,7 @@
 import express from "express";
-import { appRoutes } from "./http/routes";
+import { setupRoutes } from "./http/routes";
 
 export const app = express();
 
-app.use(appRoutes);
+app.use(express.json());
+setupRoutes(app);
