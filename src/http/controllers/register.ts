@@ -1,6 +1,6 @@
-import { prisma } from "@/lib/prisma";
 import { Request, Response } from "express";
 import { z } from "zod";
+import { registerUseCase } from "@/use-cases/register";
 
 export const register = async (req: Request, res: Response) => {
   const registerBodySchema = z.object({
@@ -9,15 +9,13 @@ export const register = async (req: Request, res: Response) => {
     password: z.string(),
   });
 
-  const { name, email, password } = registerBodySchema.parse(req.body);
+  const payload = registerBodySchema.parse(req.body);
 
-  await prisma.user.create({
-    data: {
-      name,
-      email,
-      password_hash: password,
-    },
-  });
+  try {
+    await registerUseCase(payload);
+  } catch (err) {
+    return res.status(409).send();
+  }
 
   return res.status(201).send();
 };
