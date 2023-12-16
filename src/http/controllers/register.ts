@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import { z } from "zod";
-import { registerUseCase } from "@/use-cases/register";
+import { RegisterUseCase } from "@/use-cases/register";
+import { PrismaUsersRepository } from "@/repositories/prisma-users-repository";
 
 export const register = async (req: Request, res: Response) => {
   const registerBodySchema = z.object({
@@ -14,7 +15,9 @@ export const register = async (req: Request, res: Response) => {
   const payload = registerBodySchema.parse(req.body);
 
   try {
-    await registerUseCase(payload);
+    const prismaUsersRepositor = new PrismaUsersRepository();
+    const registerUseCase = new RegisterUseCase(prismaUsersRepositor);
+    await registerUseCase.execute(payload);
   } catch (err) {
     return res.status(409).send();
   }
