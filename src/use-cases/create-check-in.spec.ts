@@ -3,24 +3,26 @@ import { CreateCheckInUseCase } from "./create-check-in";
 import { InMemoryGymsRepository } from "@/repositories/in-memory/in-memory-gyms-repository";
 import { Decimal } from "@prisma/client/runtime/library";
 import { ResourseNotFoundError } from "./errors/resource-not-found-error";
+import { MaxNumbersOfCheckInsError } from "./errors/max-numbers-of-check-ins-error";
+import { MaxDistanceError } from "./errors/max-distance-error";
 
 let checkInsRepository: InMemoryCheckInsRepository;
 let gymsRepository: InMemoryGymsRepository;
 let sut: CreateCheckInUseCase;
 
 describe("Create Check-In Use Case", () => {
-  beforeEach(() => {
+  beforeEach(async () => {
     checkInsRepository = new InMemoryCheckInsRepository();
     gymsRepository = new InMemoryGymsRepository();
     sut = new CreateCheckInUseCase(checkInsRepository, gymsRepository);
 
-    gymsRepository.items.push({
+    await gymsRepository.create({
       id: "gym-id-1",
       title: "Gym Test",
       phone: "",
       description: "",
-      latitude: new Decimal(-20.7592901),
-      longitude: new Decimal(-42.8886332),
+      latitude: -20.7592901,
+      longitude: -42.8886332,
     });
 
     jest.useFakeTimers();
@@ -69,7 +71,7 @@ describe("Create Check-In Use Case", () => {
         userLatitude: -20.7592901,
         userLongitude: -42.8886332,
       }),
-    ).rejects.toBeInstanceOf(Error);
+    ).rejects.toBeInstanceOf(MaxNumbersOfCheckInsError);
   });
 
   test("should be able to create check-in twice in different days", async () => {
@@ -111,6 +113,6 @@ describe("Create Check-In Use Case", () => {
         userLatitude: -20.7574691,
         userLongitude: -43.8742615,
       }),
-    ).rejects.toBeInstanceOf(Error);
+    ).rejects.toBeInstanceOf(MaxDistanceError);
   });
 });
