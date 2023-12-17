@@ -23,7 +23,6 @@ export class InMemoryCheckInsRepository implements CheckInsRepository {
   ): Promise<CheckIn | null> {
     const startOfTheDay = dayjs(date).startOf("date");
     const endOfTheDay = dayjs(date).endOf("date");
-
     const checkInOnSameDate = this.items.find((checkIn) => {
       const checkInDate = dayjs(checkIn.created_at);
       const isOnSameDate =
@@ -43,5 +42,12 @@ export class InMemoryCheckInsRepository implements CheckInsRepository {
       .filter((checkIn) => checkIn.user_id === userId)
       .slice((page - 1) * limit, page * limit);
     return checkins;
+  }
+
+  async countByUserId(userId: string): Promise<number> {
+    const count = this.items.filter(
+      (checkIn) => checkIn.user_id === userId,
+    ).length;
+    return count;
   }
 }
