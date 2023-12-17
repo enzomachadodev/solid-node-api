@@ -9,8 +9,6 @@ export async function authenticate(req: Request, res: Response) {
     password: z.string(),
   });
 
-  console.log(req.body);
-
   const payload = authenticateBodySchema.parse(req.body);
 
   try {

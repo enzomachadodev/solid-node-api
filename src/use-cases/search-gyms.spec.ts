@@ -51,7 +51,6 @@ describe("Search Gyms Use Case", () => {
 
     const { gyms } = await sut.execute({ query: "Gym Test", page, limit });
 
-    console.log(gyms);
     expect(gyms).toHaveLength(3);
     expect(gyms).toEqual([
       expect.objectContaining({

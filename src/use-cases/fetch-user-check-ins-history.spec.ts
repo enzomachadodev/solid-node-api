@@ -45,7 +45,6 @@ describe("Fetch User Check Ins Use Case", () => {
 
     const { checkIns } = await sut.execute({ userId: "user_01", page, limit });
 
-    console.log(checkIns);
     expect(checkIns).toHaveLength(3);
     expect(checkIns).toEqual([
       expect.objectContaining({
