@@ -9,7 +9,7 @@ describe("Fetch User Check Ins Use Case", () => {
     checkInsRepository = new InMemoryCheckInsRepository();
     sut = new FetchUserCheckInHistoryUseCase(checkInsRepository);
   });
-  test("should be able to get user profile", async () => {
+  test("should be able to fetch user check-in history", async () => {
     await checkInsRepository.create({
       gym_id: "gym_01",
       user_id: "user_01",
@@ -28,6 +28,34 @@ describe("Fetch User Check Ins Use Case", () => {
       }),
       expect.objectContaining({
         gym_id: "gym_02",
+      }),
+    ]);
+  });
+
+  test("should be able to fetch user paginated check-in history", async () => {
+    for (let i = 0; i <= 22; i++) {
+      await checkInsRepository.create({
+        gym_id: `gym_${i + 1}`,
+        user_id: "user_01",
+      });
+    }
+
+    const page = 2;
+    const limit = 20;
+
+    const { checkIns } = await sut.execute({ userId: "user_01", page, limit });
+
+    console.log(checkIns);
+    expect(checkIns).toHaveLength(3);
+    expect(checkIns).toEqual([
+      expect.objectContaining({
+        gym_id: "gym_21",
+      }),
+      expect.objectContaining({
+        gym_id: "gym_22",
+      }),
+      expect.objectContaining({
+        gym_id: "gym_23",
       }),
     ]);
   });
