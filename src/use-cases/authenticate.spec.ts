@@ -3,11 +3,15 @@ import { AuthenticateUseCase } from "./authenticate";
 import { hash } from "bcryptjs";
 import { InvalidCredentialsError } from "./errors/invalid-credentials-error";
 
-describe("Authenticate Use Case", () => {
-  test("should be able to authenticate ", async () => {
-    const usersRepository = new InMemoryUsersRepository();
-    const sut = new AuthenticateUseCase(usersRepository);
+let usersRepository: InMemoryUsersRepository;
+let sut: AuthenticateUseCase;
 
+describe("Authenticate Use Case", () => {
+  beforeEach(() => {
+    usersRepository = new InMemoryUsersRepository();
+    sut = new AuthenticateUseCase(usersRepository);
+  });
+  test("should be able to authenticate ", async () => {
     await usersRepository.create({
       name: "John Doe",
       email: "john@email.com",
@@ -23,9 +27,6 @@ describe("Authenticate Use Case", () => {
   });
 
   test("should not be able to authenticate with wrong email", async () => {
-    const usersRepository = new InMemoryUsersRepository();
-    const sut = new AuthenticateUseCase(usersRepository);
-
     await expect(
       sut.execute({
         email: "john@email.com",
@@ -35,9 +36,6 @@ describe("Authenticate Use Case", () => {
   });
 
   test("should not be able to authenticate with wrong password", async () => {
-    const usersRepository = new InMemoryUsersRepository();
-    const sut = new AuthenticateUseCase(usersRepository);
-
     await expect(
       sut.execute({
         email: "john@email.com",
