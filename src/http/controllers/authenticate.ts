@@ -1,10 +1,9 @@
 import { Request, Response } from "express";
 import { z } from "zod";
-import { AuthenticateUseCase } from "@/use-cases/authenticate";
-import { PrismaUsersRepository } from "@/repositories/prisma/prisma-users-repository";
 import { InvalidCredentialsError } from "@/use-cases/errors/invalid-credentials-error";
+import { makeAuthenticateUseCase } from "@/use-cases/factories/make-authenticate-use-case";
 
-export const authenticate = async (req: Request, res: Response) => {
+export async function authenticate(req: Request, res: Response) {
   const authenticateBodySchema = z.object({
     email: z.string().email(),
     password: z.string(),
@@ -15,8 +14,7 @@ export const authenticate = async (req: Request, res: Response) => {
   const payload = authenticateBodySchema.parse(req.body);
 
   try {
-    const prismaUsersRepository = new PrismaUsersRepository();
-    const authenticateUseCase = new AuthenticateUseCase(prismaUsersRepository);
+    const authenticateUseCase = makeAuthenticateUseCase();
     await authenticateUseCase.execute(payload);
   } catch (err) {
     if (err instanceof InvalidCredentialsError)
@@ -25,4 +23,4 @@ export const authenticate = async (req: Request, res: Response) => {
   }
 
   return res.status(201).send();
-};
+}
