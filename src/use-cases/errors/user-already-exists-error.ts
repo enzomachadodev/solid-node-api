@@ -1,5 +1,5 @@
 export class UserAlreadyExistsError extends Error {
   constructor() {
-    super("E-mail já cadastrado!");
+    super("Email is already in use");
   }
 }
