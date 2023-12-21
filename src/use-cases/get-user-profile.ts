@@ -11,6 +11,6 @@ export class GetUserProfileUseCase {
   async execute({ userId }: GetUserProfileUseCaseRequest) {
     const user = await this.userRepository.findById(userId);
     if (!user) throw new ResourseNotFoundError();
-    return { user };
+    return { ...user, password_hash: undefined };
   }
 }

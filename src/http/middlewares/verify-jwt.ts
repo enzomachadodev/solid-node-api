@@ -15,6 +15,7 @@ export async function verifyJWT(
 
   verify(token, String(process.env.JWT_SECRET), (error: any, decoded: any) => {
     if (error) return response.status(401).send({ message: error.message });
+
     response.locals.user = {
       id: decoded.sub,
       admin: decoded.admin,

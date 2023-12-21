@@ -9,7 +9,7 @@ export const setupRoutes = (app: Express) => {
 
   router.post("/users", register);
   router.post("/sessions", authenticate);
-  router.post("/me", verifyJWT, profile);
+  router.get("/me", verifyJWT, profile);
 
   app.use("/api", router);
 };
