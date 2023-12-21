@@ -18,7 +18,7 @@ describe("Authenticate Use Case", () => {
       password_hash: await hash("12345", 6),
     });
 
-    const { user } = await sut.execute({ userId: newUser.id });
+    const user = await sut.execute({ userId: newUser.id });
     expect(user.name).toEqual("John Doe");
   });
 
