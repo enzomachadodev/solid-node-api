@@ -4,8 +4,6 @@ import { Request, Response } from "express";
 
 export async function profile(request: Request, response: Response) {
   const userId = response.locals.user.id;
-
-  console.log("Passou aqui teste", userId);
   try {
     const getUserProfileUseCase = makeGetUserProfileUseCase();
     const user = await getUserProfileUseCase.execute({ userId });

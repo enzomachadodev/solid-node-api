@@ -15,11 +15,6 @@
     "baseUrl": "src",
     "typeRoots": ["node_modules/@types"]
   },
-  "include": [
-    "src",
-    "prisma/prisma-test-environment.ts",
-    "jest.config.js",
-    "jest-e2e.config.js"
-  ],
+  "include": ["src", "prisma/prisma-test-environment.ts"],
   "exclude": ["node_modules"]
 }
