@@ -15,5 +15,5 @@ export async function searchGyms(req: Request, res: Response) {
 
   const { gyms } = await searchGymUseCase.execute(query);
 
-  return res.status(200).send(gyms);
+  return res.status(200).send({ gyms });
 }
