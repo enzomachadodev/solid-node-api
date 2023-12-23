@@ -5,7 +5,7 @@ import { makeCreateGymUseCase } from "@/use-cases/factories/make-create-gym-use-
 export async function createGym(req: Request, res: Response) {
   const createGymBodySchema = z.object({
     title: z.string(),
-    description: z.string().email(),
+    description: z.string(),
     phone: z.string(),
     latitude: z.number().refine((value) => Math.abs(value) <= 90),
     longitude: z.number().refine((value) => Math.abs(value) <= 180),
