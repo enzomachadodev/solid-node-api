@@ -9,10 +9,10 @@
     "start:dev": "nodemon --watch 'src/' --exec 'ts-node -r tsconfig-paths/register src/server.ts' -e ts",
     "husky:prepare": "husky install",
     "test": "jest --config jest.config.js src/use-cases --passWithNoTests",
+    "test:e2e": "jest --passWithNoTests --config jest-e2e.config.js --testPathPattern src/http",
     "test:watch": "yarn test --watchAll",
     "test:staged": "yarn test --findRelatedTests",
-    "test:push": "jest --passWithNoTests --coverage ",
-    "test:e2e": "jest --passWithNoTests --config jest-e2e.config.js --testPathPattern src/http"
+    "test:push": "yarn test && yarn test:e2e --coverage "
   },
   "keywords": [],
   "author": "",
