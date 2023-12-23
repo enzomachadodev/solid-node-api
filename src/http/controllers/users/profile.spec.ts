@@ -1,22 +1,12 @@
 import request from "supertest";
 import { app } from "@/app";
+import { createAndAuthenticateUser } from "@/utils/test/create-and-authenticate-user";
 
 describe("Profile (e2e)", () => {
   const baseUrl: string = "/users/me";
 
   test("should be able to get user profile", async () => {
-    await request(app).post("/users").send({
-      name: "New User",
-      email: "newuser@email.com",
-      password: "12345",
-    });
-
-    const authResponse = await request(app).post("/sessions").send({
-      email: "newuser@email.com",
-      password: "12345",
-    });
-
-    const { token } = authResponse.body;
+    const { token } = await createAndAuthenticateUser(app);
 
     const response = await request(app)
       .get(baseUrl)
