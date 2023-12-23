@@ -5,7 +5,7 @@ import { createAndAuthenticateUser } from "@/utils/test/create-and-authenticate-
 describe("Search Gyms (e2e)", () => {
   const baseUrl: string = "/gyms";
 
-  test("should be able to search gyms", async () => {
+  test("should be able to search gyms by title", async () => {
     const { token } = await createAndAuthenticateUser(app);
 
     await request(app)
