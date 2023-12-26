@@ -18,5 +18,5 @@ export async function history(req: Request, res: Response) {
     page,
   });
 
-  return res.status(200).send(checkIns);
+  return res.status(200).send({ checkIns });
 }

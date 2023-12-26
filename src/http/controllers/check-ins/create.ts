@@ -13,6 +13,7 @@ export async function create(req: Request, res: Response) {
   });
 
   const { gymId } = createCheckInParamsSchema.parse(req.params);
+
   const { latitude, longitude } = createCheckInBodySchema.parse(req.body);
 
   const createCheckInUseCase = makeCreateCheckInUseCase();
