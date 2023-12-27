@@ -10,5 +10,4 @@ module.exports = {
     "@/(.*)": "<rootDir>/src/$1",
   },
   testMatch: ["**/*.spec.ts"],
-  testEnvironment: "./prisma/prisma-test-environment.ts",
 };
