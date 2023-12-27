@@ -44,6 +44,9 @@ export default class PrismaTestEnvironment extends NodeEnvironment {
 
     await client.connect();
     await client.query(`DROP SCHEMA IF EXISTS "${this.schema}" CASCADE`);
+    await execSync(`${prismaBinary} db push --force-reset`);
+
     await client.end();
+    await super.teardown();
   }
 }
