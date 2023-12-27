@@ -15,7 +15,7 @@ jobs:
         env:
           POSTGRESQL_USERNAME: docker
           POSTGRESQL_PASSWORD: docker
-          POSTGRESQL_DATABASE: solidnodeapi
+          POSTGRESQL_DATABASE: solid_node_api
 
     steps:
       - uses: actions/checkout@v3
@@ -30,4 +30,4 @@ jobs:
       - run: npm run test:e2e
         env:
           JWT_SECRET: testing
-          DATABASE_URL: "postgresql://docker:docker@localhost:5432/solidnodeapi?schema=public"
+          DATABASE_URL: "postgresql://docker:docker@localhost:5432/solid_node_api?schema=public"
