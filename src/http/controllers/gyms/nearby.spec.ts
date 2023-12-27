@@ -6,7 +6,7 @@ describe("Nearby Gyms (e2e)", () => {
   const baseUrl: string = "/gyms";
 
   test("should be able to list nearby gyms", async () => {
-    const { token } = await createAndAuthenticateUser(app);
+    const { token } = await createAndAuthenticateUser(app, true);
 
     await request(app)
       .post(baseUrl)

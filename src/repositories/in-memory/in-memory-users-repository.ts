@@ -10,6 +10,7 @@ export class InMemoryUsersRepository implements UsersRepository {
       id: randomUUID(),
       created_at: new Date(),
       updated_at: new Date(),
+      role: data.role || "MEMBER",
     };
 
     this.items.push(newUser);

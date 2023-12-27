@@ -19,13 +19,17 @@ export async function authenticate(req: Request, res: Response) {
 
     const { user } = await authenticateUseCase.execute(payload);
 
-    const token = jwt.sign({ sub: user.id }, env.JWT_SECRET, {
+    const token = jwt.sign({ sub: user.id, role: user.role }, env.JWT_SECRET, {
       expiresIn: "10m",
     });
 
-    const refreshToken = jwt.sign({ sub: user.id }, env.JWT_SECRET, {
-      expiresIn: "7d",
-    });
+    const refreshToken = jwt.sign(
+      { sub: user.id, role: user.role },
+      env.JWT_SECRET,
+      {
+        expiresIn: "7d",
+      },
+    );
 
     return res
       .cookie("refreshToken", refreshToken, {

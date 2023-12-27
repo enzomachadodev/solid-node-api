@@ -18,7 +18,7 @@ export async function verifyJWT(
 
     response.locals.user = {
       id: decoded.sub,
-      admin: decoded.admin,
+      role: decoded.role,
     };
     response.locals.decoded = decoded;
   });

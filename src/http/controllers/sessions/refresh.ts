@@ -25,12 +25,16 @@ export async function refresh(request: Request, response: Response) {
     },
   );
 
-  const token = jwt.sign({ sub: response.locals.user.id }, env.JWT_SECRET, {
-    expiresIn: "10m",
-  });
+  const token = jwt.sign(
+    { sub: response.locals.user.id, role: response.locals.user.role },
+    env.JWT_SECRET,
+    {
+      expiresIn: "10m",
+    },
+  );
 
   const refreshToken = jwt.sign(
-    { sub: response.locals.user.id },
+    { sub: response.locals.user.id, role: response.locals.user.role },
     env.JWT_SECRET,
     {
       expiresIn: "7d",
